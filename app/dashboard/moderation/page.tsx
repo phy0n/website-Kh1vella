@@ -19,9 +19,8 @@ export default function ModerationPage() {
     if (data) {
       setSettings(data);
     } else {
-      // Create default
       const defaultSettings = {
-        guild_id: "1234567890", // placeholder or dynamic
+        guild_id: "1234567890",
         auto_mod_enabled: true,
         anti_spam_enabled: true,
         anti_link_enabled: false,
@@ -59,8 +58,6 @@ export default function ModerationPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        
-        {/* Core Protection */}
         <div className="bg-[#0a0a0a] border border-white/5 p-6 flex flex-col gap-6">
           <div className="flex items-center gap-3 pb-4 border-b border-white/5">
             <ShieldCheck className="w-5 h-5 text-zinc-500" />
@@ -101,7 +98,6 @@ export default function ModerationPage() {
           </div>
         </div>
 
-        {/* Server Defenses */}
         <div className="bg-[#0a0a0a] border border-white/5 p-6 flex flex-col gap-6">
           <div className="flex items-center gap-3 pb-4 border-b border-white/5">
             <Zap className="w-5 h-5 text-zinc-500" />
@@ -131,7 +127,6 @@ export default function ModerationPage() {
           </div>
         </div>
 
-        {/* Strike System Thresholds */}
         <div className="bg-[#0a0a0a] border border-white/5 p-6 flex flex-col gap-6 lg:col-span-2">
           <div className="flex items-center gap-3 pb-4 border-b border-white/5">
             <Trash2 className="w-5 h-5 text-zinc-500" />
