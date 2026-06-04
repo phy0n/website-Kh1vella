@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { FolderOpen, Send, Palette, LayoutTemplate } from "lucide-react";
+import { FolderOpen, Send, Palette, LayoutTemplate, AlertCircle } from "lucide-react";
 import clsx from "clsx";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export default function EmbedBuilderPage() {
   const [channelId, setChannelId] = useState("");
@@ -55,10 +57,19 @@ export default function EmbedBuilderPage() {
   };
 
   return (
-    <div className="flex flex-col gap-10 max-w-[1600px] h-full">
-      <div className="flex items-center gap-3">
-        <div className="w-2 h-2 bg-red-600" />
-        <h3 className="font-outfit font-semibold text-lg uppercase tracking-widest">Embed Studio</h3>
+    <div className="flex flex-col gap-10 w-full h-full">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="w-2 h-2 bg-red-600" />
+          <h3 className="font-outfit font-semibold text-lg uppercase tracking-widest">Embed Studio</h3>
+        </div>
+        
+        {!process.env.NEXT_PUBLIC_BOT_API_URL && (
+          <div className="flex items-center gap-2 text-amber-500 bg-amber-500/10 px-4 py-2 rounded text-xs font-inter uppercase tracking-widest font-bold">
+            <AlertCircle className="w-4 h-4" />
+            <span>Warning: NEXT_PUBLIC_BOT_API_URL is missing. Network calls may fail.</span>
+          </div>
+        )}
       </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 h-full">
@@ -213,7 +224,7 @@ export default function EmbedBuilderPage() {
             <h4 className="font-outfit uppercase tracking-widest text-xs font-bold">Live Preview</h4>
           </div>
           
-          <div className="bg-[#313338] rounded flex flex-col p-4 w-full max-w-[500px]">
+          <div className="bg-[#313338] rounded flex flex-col p-4 w-full max-w-full">
             <div className="flex flex-col border-l-4 rounded bg-[#2b2d31] p-4 gap-2" style={{ borderColor: embed.color || "#1e1f22" }}>
               {(embed.author_name || embed.author_icon) && (
                 <div className="flex items-center gap-2 mb-1">
@@ -225,7 +236,11 @@ export default function EmbedBuilderPage() {
                 <div className="flex flex-col gap-2 flex-1">
                   {embed.title && <span className="text-[#00A8FC] font-semibold text-base">{embed.title}</span>}
                   {embed.description && (
-                    <div className="text-zinc-300 text-sm whitespace-pre-wrap">{embed.description}</div>
+                    <div className="text-zinc-300 text-sm discord-markdown">
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                        {embed.description}
+                      </ReactMarkdown>
+                    </div>
                   )}
                 </div>
                 {embed.thumbnail_url && (
@@ -235,7 +250,7 @@ export default function EmbedBuilderPage() {
                 )}
               </div>
               {embed.image_url && (
-                <div className="mt-2 rounded overflow-hidden max-w-[400px]">
+                <div className="mt-2 rounded overflow-hidden w-full max-w-full">
                   <img src={embed.image_url} alt="embed" className="w-full object-cover" />
                 </div>
               )}

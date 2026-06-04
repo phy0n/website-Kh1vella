@@ -43,7 +43,7 @@ export default function ModerationPage() {
   if (loading) return null;
 
   return (
-    <div className="flex flex-col gap-10 max-w-[1200px]">
+    <div className="flex flex-col gap-10 w-full">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-2 h-2 bg-red-600" />

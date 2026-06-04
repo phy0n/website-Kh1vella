@@ -155,7 +155,7 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="flex flex-col h-full w-full max-w-[1600px] mx-auto gap-10">
+    <div className="flex flex-col h-full w-full w-full gap-10">
             {activeTab === "Overview" && (
               <>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
