@@ -233,10 +233,10 @@ export default function EmbedBuilderPage() {
                 </div>
               )}
               <div className="flex gap-4">
-                <div className="flex flex-col gap-2 flex-1">
-                  {embed.title && <span className="text-white font-semibold text-base">{embed.title}</span>}
+                <div className="flex flex-col gap-2 flex-1 min-w-0">
+                  {embed.title && <span className="text-white font-semibold text-base break-words">{embed.title}</span>}
                   {embed.description && (
-                    <div className="text-zinc-300 text-sm discord-markdown">
+                    <div className="text-zinc-300 text-sm discord-markdown break-words">
                       <ReactMarkdown remarkPlugins={[remarkGfm]}>
                         {embed.description}
                       </ReactMarkdown>
@@ -255,9 +255,9 @@ export default function EmbedBuilderPage() {
                 </div>
               )}
               {(embed.footer_text || embed.footer_icon) && (
-                <div className="flex items-center gap-2 mt-2 pt-2 text-xs text-zinc-400 font-medium">
-                  {embed.footer_icon && <img src={embed.footer_icon} alt="footer" className="w-5 h-5 rounded-full" />}
-                  {embed.footer_text && <span>{embed.footer_text}</span>}
+                <div className="flex items-center gap-2 mt-2 pt-2 text-xs text-zinc-400 font-medium min-w-0">
+                  {embed.footer_icon && <img src={embed.footer_icon} alt="footer" className="w-5 h-5 rounded-full shrink-0" />}
+                  {embed.footer_text && <span className="break-words truncate whitespace-normal">{embed.footer_text}</span>}
                 </div>
               )}
             </div>
