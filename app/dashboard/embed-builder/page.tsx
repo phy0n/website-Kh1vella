@@ -234,7 +234,7 @@ export default function EmbedBuilderPage() {
               )}
               <div className="flex gap-4">
                 <div className="flex flex-col gap-2 flex-1">
-                  {embed.title && <span className="text-[#00A8FC] font-semibold text-base">{embed.title}</span>}
+                  {embed.title && <span className="text-white font-semibold text-base">{embed.title}</span>}
                   {embed.description && (
                     <div className="text-zinc-300 text-sm discord-markdown">
                       <ReactMarkdown remarkPlugins={[remarkGfm]}>
