@@ -1,8 +1,7 @@
 "use client";
 
 import { createClient } from "@/utils/supabase";
-import { motion, AnimatePresence } from "framer-motion";
-import { Activity, Power, LogOut, Cpu, Send, Server, TerminalSquare, AlertCircle, ShieldAlert } from "lucide-react";
+import { LogOut, LayoutDashboard, Send, Server, Power } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import clsx from "clsx";
@@ -38,6 +37,7 @@ export default function DashboardPage() {
         router.push("/");
         return;
       }
+      
       if (session.user.user_metadata.provider_id !== "494169184175915019") {
         alert("ACCESS DENIED: Unauthorized Identity.");
         await supabase.auth.signOut();
@@ -45,6 +45,7 @@ export default function DashboardPage() {
         return;
       }
       setUser(session.user);
+      
       try {
         const res = await fetch(`${BOT_API_URL}/api/status`);
         if (res.ok) {
@@ -57,6 +58,7 @@ export default function DashboardPage() {
           setBotStatus("Offline");
         }
       } catch (error) {
+        console.error("Failed to fetch bot status:", error);
         setBotStatus("Offline");
       }
       
@@ -106,13 +108,13 @@ export default function DashboardPage() {
       
       const data = await res.json();
       if (data.success) {
-        setSendStatus({ type: "success", msg: "Transmission successful." });
+        setSendStatus({ type: "success", msg: "Message sent successfully." });
         setMessageContent("");
       } else {
-        setSendStatus({ type: "error", msg: data.error || "Transmission failed." });
+        setSendStatus({ type: "error", msg: data.error || "Failed to send message." });
       }
     } catch (e) {
-      setSendStatus({ type: "error", msg: "API Unreachable." });
+      setSendStatus({ type: "error", msg: "Bot API is unreachable." });
     }
     setIsSending(false);
   };
@@ -120,201 +122,154 @@ export default function DashboardPage() {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-black">
-        <div className="w-8 h-8 border-4 border-red-600 border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
-  const commandsList = [
-    { cmd: "/play", desc: "Start audio stream" },
-    { cmd: "/skip", desc: "Skip current track" },
-    { cmd: "/kick", desc: "Remove target entity" },
-    { cmd: "/ban", desc: "Permanent exile" },
-    { cmd: "/purge", desc: "Mass delete messages" },
-    { cmd: "/chatbot", desc: "Toggle AI systems" }
-  ];
-
   return (
-    <main className="min-h-screen bg-black text-white font-sans selection:bg-red-600/30 selection:text-white pb-20">
-      <nav className="fixed top-0 w-full border-b border-red-900/30 bg-black/50 backdrop-blur-xl z-50">
-        <div className="max-w-[1400px] mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-red-600/10 border border-red-500/20 flex items-center justify-center">
-              <ShieldAlert className="w-6 h-6 text-red-500" />
-            </div>
-            <div>
-              <h2 className="font-outfit font-bold text-2xl leading-none tracking-tight">Kh1vella</h2>
-              <span className="text-[10px] text-red-500 font-inter uppercase tracking-[0.2em]">Restricted Access</span>
-            </div>
+    <div className="min-h-screen bg-[#0a0a0a] text-white flex font-sans">
+      <aside className="w-64 bg-black border-r border-zinc-800 flex flex-col">
+        <div className="p-6 border-b border-zinc-800">
+          <h2 className="font-bold text-xl tracking-wide">Kh1vella Admin</h2>
+          <p className="text-xs text-zinc-500 mt-1">v2.0 Dashboard</p>
+        </div>
+        
+        <nav className="flex-1 p-4 flex flex-col gap-2">
+          <div className="flex items-center gap-3 px-4 py-3 bg-zinc-900 rounded cursor-pointer text-white">
+            <LayoutDashboard className="w-5 h-5" />
+            <span className="font-medium">Overview</span>
           </div>
+        </nav>
 
-          <div className="flex items-center gap-6">
-            <div className="hidden md:flex items-center gap-4">
-              <div className="text-right">
-                <p className="text-sm font-outfit font-semibold">{user?.user_metadata?.full_name}</p>
-                <p className="text-[10px] text-zinc-500 font-inter uppercase tracking-widest">Root Admin</p>
-              </div>
-              <img src={user?.user_metadata?.avatar_url} alt="Profile" className="w-10 h-10 grayscale hover:grayscale-0 transition-all border border-red-500/20" />
-            </div>
-            <div className="w-px h-8 bg-white/10 hidden md:block" />
-            <button onClick={handleLogout} className="text-zinc-500 hover:text-red-500 transition-colors">
-              <LogOut className="w-5 h-5" />
-            </button>
+        <div className="p-4 border-t border-zinc-800">
+          <div className="flex items-center gap-3 px-4 py-3 hover:bg-zinc-900 rounded cursor-pointer text-zinc-400 hover:text-white transition-colors" onClick={handleLogout}>
+            <LogOut className="w-5 h-5" />
+            <span className="font-medium">Logout</span>
           </div>
         </div>
-      </nav>
-      <div className="max-w-[1400px] mx-auto px-6 pt-32">
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          <div className="col-span-1 lg:col-span-8 flex flex-col gap-12">
-            <div>
-              <h1 className="text-5xl md:text-7xl font-outfit font-bold tracking-tighter leading-[0.9]">
-                CORE <br/>
-                <span className="text-red-600 italic">DASHBOARD</span>
-              </h1>
-              <p className="text-zinc-400 font-inter mt-6 max-w-xl text-lg">
-                Real-time monitoring and direct interaction protocol for the Kh1vella Discord infrastructure.
-              </p>
+      </aside>
+      <main className="flex-1 flex flex-col overflow-y-auto">
+        <header className="h-20 bg-[#0a0a0a] border-b border-zinc-800 flex items-center justify-between px-8">
+          <h1 className="text-2xl font-bold">System Overview</h1>
+          <div className="flex items-center gap-4">
+            <span className="text-sm font-medium">{user?.user_metadata?.full_name}</span>
+            <img src={user?.user_metadata?.avatar_url} alt="Avatar" className="w-10 h-10 rounded-full" />
+          </div>
+        </header>
+        <div className="p-8 flex flex-col gap-8 max-w-6xl">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-black border border-zinc-800 p-6 rounded flex flex-col gap-4">
+              <div className="flex items-center gap-3 text-zinc-400">
+                <Server className="w-5 h-5" />
+                <span className="font-semibold uppercase tracking-wider text-xs">Bot Status</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className={clsx("w-3 h-3 rounded-full", botStatus === "Online" ? "bg-green-500" : "bg-red-500")} />
+                <span className="text-3xl font-bold">{botStatus}</span>
+              </div>
             </div>
-            <div className="relative pt-8">
-              <div className="absolute top-0 left-0 w-32 h-1 bg-red-600" />
-              <div className="flex items-center gap-3 mb-6">
-                <Send className="w-5 h-5 text-red-500" />
-                <h3 className="font-outfit font-bold text-2xl uppercase tracking-widest">Direct Push</h3>
+            <div className="bg-black border border-zinc-800 p-6 rounded flex flex-col gap-4">
+              <div className="flex items-center gap-3 text-zinc-400">
+                <LayoutDashboard className="w-5 h-5" />
+                <span className="font-semibold uppercase tracking-wider text-xs">Total Members</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="text-3xl font-bold">{totalMembers}</span>
+              </div>
+            </div>
+            <div className="bg-black border border-zinc-800 p-6 rounded flex flex-col justify-between">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3 text-zinc-400">
+                  <Power className="w-5 h-5" />
+                  <span className="font-semibold uppercase tracking-wider text-xs">AI Chatbot</span>
+                </div>
+                <span className={clsx("text-xs font-bold px-2 py-1 rounded", isAiEnabled ? "bg-green-500/20 text-green-400" : "bg-red-500/20 text-red-400")}>
+                  {isAiEnabled ? "ENABLED" : "DISABLED"}
+                </span>
               </div>
               
-              <form onSubmit={handleSendMessage} className="flex flex-col gap-4 max-w-2xl">
-                <div className="flex flex-col gap-2">
-                  <label className="text-xs font-inter uppercase tracking-widest text-zinc-500">Target Channel ID</label>
-                  <input 
-                    type="text" 
-                    value={messageTarget}
-                    onChange={(e) => setMessageTarget(e.target.value)}
-                    placeholder="e.g. 123456789012345678"
-                    className="bg-transparent border-b border-zinc-800 focus:border-red-500 px-0 py-3 text-white font-inter outline-none transition-colors placeholder:text-zinc-700"
-                    required
-                  />
-                </div>
-                <div className="flex flex-col gap-2 mt-4">
-                  <label className="text-xs font-inter uppercase tracking-widest text-zinc-500">Payload Content</label>
-                  <textarea 
-                    value={messageContent}
-                    onChange={(e) => setMessageContent(e.target.value)}
-                    placeholder="Enter message..."
-                    rows={3}
-                    className="bg-transparent border-b border-zinc-800 focus:border-red-500 px-0 py-3 text-white font-inter outline-none transition-colors resize-none placeholder:text-zinc-700"
-                    required
-                  />
-                </div>
-                
-                <div className="flex items-center gap-6 mt-4">
-                  <button 
-                    type="submit"
-                    disabled={isSending || botStatus === "Offline"}
-                    className="bg-red-600 text-white font-outfit font-semibold px-8 py-3 uppercase tracking-widest text-sm hover:bg-red-500 disabled:opacity-50 transition-colors flex items-center gap-2">
-                    {isSending ? "Transmitting..." : "Push Payload"}
-                  </button>
-                  
-                  {sendStatus.type && (
-                    <span className={clsx("text-sm font-inter", sendStatus.type === "success" ? "text-emerald-500" : "text-red-500")}>
-                      {sendStatus.msg}
-                    </span>
-                  )}
-                </div>
-              </form>
+              <button 
+                onClick={toggleAi}
+                disabled={botStatus === "Offline"}
+                className="mt-4 bg-zinc-900 hover:bg-zinc-800 disabled:opacity-50 text-white font-medium py-2 rounded transition-colors cursor-pointer">
+                Toggle AI
+              </button>
             </div>
-            <div className="relative pt-8">
-              <div className="absolute top-0 left-0 w-32 h-1 bg-zinc-800" />
-              <div className="flex items-center justify-between mb-8">
-                <div className="flex items-center gap-3">
-                  <Server className="w-5 h-5 text-red-500" />
-                  <h3 className="font-outfit font-bold text-2xl uppercase tracking-widest">Network Nodes</h3>
-                </div>
-                <div className="text-right">
-                  <p className="text-3xl font-outfit font-bold text-white leading-none">{totalMembers}</p>
-                  <span className="text-[10px] text-zinc-500 font-inter uppercase tracking-widest">Total Entities</span>
-                </div>
+            
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="bg-black border border-zinc-800 rounded flex flex-col">
+              <div className="p-6 border-b border-zinc-800">
+                <h3 className="font-bold text-lg">Connected Servers</h3>
               </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+              <div className="p-6 flex flex-col gap-4">
                 {guilds.length > 0 ? guilds.map(guild => (
-                  <div key={guild.id} className="flex items-center justify-between py-3 border-b border-white/5 group">
-                    <div>
-                      <h4 className="font-outfit font-semibold text-lg group-hover:text-red-400 transition-colors">{guild.name}</h4>
-                      <p className="text-xs text-zinc-500 font-mono mt-1">{guild.id}</p>
+                  <div key={guild.id} className="flex items-center justify-between p-4 bg-zinc-900/50 rounded">
+                    <div className="flex flex-col">
+                      <span className="font-bold">{guild.name}</span>
+                      <span className="text-xs text-zinc-500">{guild.id}</span>
                     </div>
-                    <span className="bg-red-500/10 text-red-500 px-3 py-1 text-xs font-semibold rounded-full font-inter">
-                      {guild.member_count} mem
+                    <span className="text-sm font-medium bg-zinc-800 px-3 py-1 rounded">
+                      {guild.member_count} members
                     </span>
                   </div>
                 )) : (
-                  <p className="text-zinc-600 italic text-sm">No connected nodes detected.</p>
+                  <p className="text-zinc-500 text-sm">No servers found. Make sure bot is online.</p>
                 )}
               </div>
             </div>
-
-          </div>
-          <div className="col-span-1 lg:col-span-4 flex flex-col gap-8">
-            <div className="bg-red-600 p-8 relative overflow-hidden">
-              <div className="absolute -bottom-12 -right-12 w-48 h-48 bg-black/20 blur-[40px] rounded-full pointer-events-none" />
-              
-              <div className="flex items-center justify-between mb-12 relative z-10">
-                <div className="flex items-center gap-2 text-black/50 uppercase tracking-widest text-[10px] font-bold">
-                  <Activity className="w-4 h-4" />
-                  <span>Main Cluster</span>
-                </div>
-                <div className={clsx(
-                  "px-3 py-1 text-[10px] font-bold font-inter uppercase tracking-widest flex items-center gap-2",
-                  botStatus === "Online" ? "bg-black/20 text-white" : "bg-black/50 text-red-200"
-                )}>
-                  <span className={clsx("w-1.5 h-1.5 rounded-full", botStatus === "Online" ? "bg-emerald-400" : "bg-red-900")} />
-                  {botStatus}
-                </div>
+            <div className="bg-black border border-zinc-800 rounded flex flex-col">
+              <div className="p-6 border-b border-zinc-800 flex items-center gap-3">
+                <Send className="w-5 h-5" />
+                <h3 className="font-bold text-lg">Send Message to Channel</h3>
               </div>
-
-              <div className="relative z-10">
-                <h3 className="text-4xl font-outfit font-black text-black leading-none mb-2 tracking-tighter">
-                  {isAiEnabled ? "AI ACTIVE" : "AI HALTED"}
-                </h3>
-                <p className="text-white/90 font-inter text-sm mb-8">
-                  Generative language model engine is currently {isAiEnabled ? "processing input streams" : "suspended"}.
-                </p>
-                
-                <button 
-                  onClick={toggleAi}
-                  disabled={botStatus === "Offline"}
-                  className={clsx(
-                    "w-full h-16 flex items-center justify-center gap-3 font-outfit font-bold text-lg uppercase tracking-widest transition-all",
-                    isAiEnabled ? "bg-black text-white hover:bg-zinc-900" : "bg-red-900 text-white hover:bg-black"
-                  )}>
-                  <Power className="w-5 h-5" />
-                  <span>Toggle Engine</span>
-                </button>
-              </div>
-            </div>
-
-            <div className="p-8 border border-zinc-900 bg-zinc-950/50">
-              <div className="flex items-center gap-3 mb-6">
-                <TerminalSquare className="w-5 h-5 text-zinc-500" />
-                <h3 className="font-outfit font-bold text-lg uppercase tracking-widest text-zinc-400">Registry</h3>
-              </div>
-              
-              <div className="flex flex-col gap-4">
-                {commandsList.map(item => (
-                  <div key={item.cmd} className="flex flex-col">
-                    <span className="font-mono text-red-500 text-sm font-bold">{item.cmd}</span>
-                    <span className="font-inter text-zinc-500 text-xs">{item.desc}</span>
+              <div className="p-6">
+                <form onSubmit={handleSendMessage} className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-2">
+                    <label className="text-sm font-medium text-zinc-400">Channel ID</label>
+                    <input 
+                      type="text" 
+                      value={messageTarget}
+                      onChange={(e) => setMessageTarget(e.target.value)}
+                      placeholder="e.g. 1234567890"
+                      className="bg-zinc-900 border border-zinc-800 rounded p-3 text-white focus:outline-none focus:border-blue-500 transition-colors"
+                      required
+                    />
                   </div>
-                ))}
+                  <div className="flex flex-col gap-2">
+                    <label className="text-sm font-medium text-zinc-400">Message Content</label>
+                    <textarea 
+                      value={messageContent}
+                      onChange={(e) => setMessageContent(e.target.value)}
+                      placeholder="Type your message here..."
+                      rows={4}
+                      className="bg-zinc-900 border border-zinc-800 rounded p-3 text-white focus:outline-none focus:border-blue-500 transition-colors resize-none"
+                      required
+                    />
+                  </div>
+                  
+                  <div className="flex items-center justify-between mt-2">
+                    {sendStatus.type && (
+                      <span className={clsx("text-sm", sendStatus.type === "success" ? "text-green-500" : "text-red-500")}>
+                        {sendStatus.msg}
+                      </span>
+                    )}
+                    <button 
+                      type="submit"
+                      disabled={isSending || botStatus === "Offline"}
+                      className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-medium px-6 py-2 rounded transition-colors ml-auto cursor-pointer">
+                      {isSending ? "Sending..." : "Send Message"}
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
 
-        </motion.div>
-      </div>
-    </main>
+        </div>
+      </main>
+    </div>
   );
 }
