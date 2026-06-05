@@ -43,11 +43,12 @@ export default function CommandsPage() {
       ]
     },
     {
-      name: "AI Subsystem",
+      name: "AI & System Controls",
       icon: Sparkles,
-      description: "Generative AI controls.",
+      description: "Generative AI and Core System controls.",
       commands: [
         { name: "/chatbot", desc: "Toggle Google Gemini subsystem on/off.", admin: true },
+        { name: "/status", desc: "Modify bot's rich presence (Playing, Watching, etc).", admin: true },
       ]
     }
   ];
