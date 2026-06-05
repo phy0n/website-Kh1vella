@@ -56,6 +56,7 @@ export default function CommandsPage() {
         { name: "/autoreply", desc: "Manage custom server auto-replies.", admin: true },
         { name: "/booster", desc: "Configure the server booster system.", admin: true },
         { name: "/sticky", desc: "Manage sticky messages in a channel.", admin: true },
+        { name: "/restart", desc: "Force restarts the bot. (Railway auto-recovers).", admin: true },
       ]
     }
   ];
