@@ -48,27 +48,20 @@ export default function AIPage() {
   );
 
   return (
-    <div className="flex flex-col gap-8 w-full max-w-6xl mx-auto h-full">
-      <div className="flex justify-between items-end">
-        <div>
-          <h1 className="font-outfit text-3xl font-bold tracking-wide text-white mb-2 flex items-center gap-3">
-            <BrainCircuit className="w-8 h-8 text-red-500" />
-            Generative AI Center
-          </h1>
-          <p className="font-inter text-sm text-zinc-400">
-            Monitor and manage Khivella's neural memory banks and relationship scores.
-          </p>
+    <div className="flex flex-col gap-10 w-full">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="w-2 h-2 bg-red-600" />
+          <h3 className="font-outfit font-semibold text-lg uppercase tracking-widest">Generative AI Center</h3>
         </div>
-        <div className="flex gap-3">
-          <div className="bg-black border border-white/10 rounded px-4 py-2 flex items-center gap-2">
-            <Database className="w-4 h-4 text-zinc-500" />
-            <span className="text-sm font-mono text-zinc-300">{memories.length} Memory Blocks</span>
-          </div>
+        <div className="bg-black border border-white/10 rounded px-4 py-2 flex items-center gap-2">
+          <Database className="w-4 h-4 text-zinc-500" />
+          <span className="text-sm font-mono text-zinc-300">{memories.length} Memory Blocks</span>
         </div>
       </div>
 
-      <div className="bg-[#0a0a0a] border border-white/5 rounded overflow-hidden flex flex-col h-full min-h-[500px]">
-        <div className="p-4 border-b border-white/5 bg-white/[0.02] flex justify-between items-center gap-4">
+      <div className="bg-[#0a0a0a] border border-white/5 flex flex-col flex-1 relative overflow-hidden min-h-[500px]">
+        <div className="p-6 border-b border-white/5 bg-[#050505] flex justify-between items-center gap-4">
           <div className="relative w-full max-w-md">
             <Search className="w-4 h-4 text-zinc-500 absolute left-3 top-1/2 -translate-y-1/2" />
             <input 
@@ -76,10 +69,10 @@ export default function AIPage() {
               placeholder="Search username or Discord ID..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-black border border-white/10 rounded px-3 py-2 pl-9 text-sm text-white focus:outline-none focus:border-red-500/50 transition-colors placeholder:text-zinc-700"
+              className="w-full bg-black border border-white/10 rounded px-3 py-2 pl-9 text-sm text-white focus:outline-none focus:border-red-500/50 transition-colors placeholder:text-zinc-700 font-inter"
             />
           </div>
-          <button className="bg-white/5 hover:bg-white/10 text-white px-3 py-2 rounded text-sm font-inter transition-colors flex items-center gap-2">
+          <button className="bg-white/5 hover:bg-white/10 text-white px-4 py-2 rounded text-xs font-inter uppercase tracking-widest transition-colors flex items-center gap-2">
             <SlidersHorizontal className="w-4 h-4" />
             Filter Settings
           </button>
@@ -89,7 +82,7 @@ export default function AIPage() {
           {loading ? (
             <div className="w-full h-full flex flex-col items-center justify-center text-zinc-500 gap-3">
               <Loader2 className="w-6 h-6 animate-spin" />
-              <span className="text-sm font-inter">Syncing with neural core...</span>
+              <span className="text-sm font-inter uppercase tracking-widest">Syncing with neural core...</span>
             </div>
           ) : filteredMemories.length === 0 ? (
             <div className="w-full h-full flex flex-col items-center justify-center text-zinc-500 gap-3 p-10 text-center">
@@ -98,7 +91,7 @@ export default function AIPage() {
             </div>
           ) : (
             <div className="w-full min-w-[800px]">
-              <div className="grid grid-cols-12 gap-4 px-6 py-3 border-b border-white/5 text-xs font-bold uppercase tracking-wider text-zinc-500 bg-white/[0.01]">
+              <div className="grid grid-cols-12 gap-4 px-8 py-4 border-b border-white/5 text-xs font-bold uppercase tracking-widest text-zinc-500 bg-[#050505] sticky top-0 z-10">
                 <div className="col-span-2">User</div>
                 <div className="col-span-1 text-center">Rel. Score</div>
                 <div className="col-span-3">Personality Tags</div>
@@ -107,13 +100,13 @@ export default function AIPage() {
                 <div className="col-span-1 text-right">Action</div>
               </div>
               {filteredMemories.map((m) => (
-                <div key={m.user_id} className="grid grid-cols-12 gap-4 px-6 py-4 border-b border-white/5 text-sm hover:bg-white/[0.02] transition-colors group items-start">
+                <div key={m.user_id} className="grid grid-cols-12 gap-4 px-8 py-5 border-b border-white/5 text-sm hover:bg-white/[0.02] transition-colors group items-start">
                   <div className="col-span-2 flex flex-col gap-1">
-                    <span className="font-inter text-white font-medium truncate">{m.username}</span>
+                    <span className="font-inter text-white font-medium tracking-wide truncate">{m.username}</span>
                     <span className="font-mono text-zinc-600 text-[10px]">{m.user_id}</span>
                   </div>
                   <div className="col-span-1 flex justify-center">
-                    <span className={`px-2 py-0.5 rounded text-xs font-mono border ${
+                    <span className={`px-2 py-0.5 rounded text-[10px] font-mono border ${
                       m.relationship_score > 10 ? 'bg-green-500/10 text-green-500 border-green-500/20' : 
                       m.relationship_score < 0 ? 'bg-red-500/10 text-red-500 border-red-500/20' : 
                       'bg-zinc-500/10 text-zinc-400 border-zinc-500/20'
@@ -122,11 +115,11 @@ export default function AIPage() {
                     </span>
                   </div>
                   <div className="col-span-3 flex flex-wrap gap-1 content-start">
-                    {m.favorite_game && <span className="bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 px-2 py-0.5 rounded text-[10px] uppercase truncate max-w-full" title={`Game: ${m.favorite_game}`}>🎮 {m.favorite_game}</span>}
-                    {m.favorite_food && <span className="bg-orange-500/10 text-orange-400 border border-orange-500/20 px-2 py-0.5 rounded text-[10px] uppercase truncate max-w-full" title={`Food: ${m.favorite_food}`}>🍔 {m.favorite_food}</span>}
+                    {m.favorite_game && <span className="bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 px-2 py-0.5 rounded text-[10px] uppercase truncate max-w-full tracking-wider" title={`Game: ${m.favorite_game}`}>🎮 {m.favorite_game}</span>}
+                    {m.favorite_food && <span className="bg-orange-500/10 text-orange-400 border border-orange-500/20 px-2 py-0.5 rounded text-[10px] uppercase truncate max-w-full tracking-wider" title={`Food: ${m.favorite_food}`}>🍔 {m.favorite_food}</span>}
                     {!m.favorite_game && !m.favorite_food && <span className="text-zinc-600 text-xs italic">No tags</span>}
                   </div>
-                  <div className="col-span-4 font-inter text-zinc-400 text-xs line-clamp-2" title={m.about_user || ""}>
+                  <div className="col-span-4 font-inter text-zinc-400 text-xs line-clamp-2 leading-relaxed" title={m.about_user || ""}>
                     {m.about_user || <span className="italic text-zinc-600">No contextual notes available</span>}
                   </div>
                   <div className="col-span-1 font-inter text-zinc-500 text-xs">
@@ -136,7 +129,8 @@ export default function AIPage() {
                     <button 
                       onClick={() => handleDelete(m.user_id)}
                       className="text-zinc-600 hover:text-red-500 hover:bg-red-500/10 p-2 rounded transition-all opacity-0 group-hover:opacity-100"
-                      title="Wipe Memory">
+                      title="Wipe Memory"
+                    >
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { createClient } from "@/utils/supabase";
-import { LogOut, LayoutDashboard, Send, Server, Power, Activity, TerminalSquare, ShieldAlert, Users, Shield, FolderOpen, AlertTriangle, FileText, Settings, Database, ActivityIcon, BrainCircuit } from "lucide-react";
+import { LogOut, LayoutDashboard, Send, Server, Power, Activity, TerminalSquare, ShieldAlert, Users, Shield, FolderOpen, AlertTriangle, FileText, Settings, Database, ActivityIcon, BrainCircuit, Zap } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { motion } from "framer-motion";
@@ -54,24 +54,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       items: [
         { name: "Overview", icon: LayoutDashboard, href: "/dashboard" },
         { name: "Terminal", icon: TerminalSquare, href: "/dashboard/terminal" },
-        { name: "Command Ref", icon: Server, href: "/dashboard/commands" },
-        { name: "Embed Studio", icon: FolderOpen, href: "/dashboard/embed-builder" },
       ]
     },
     {
-      title: "Community",
+      title: "Access & Enforcement",
       items: [
-        { name: "Members", icon: Users, href: "/dashboard/members" },
         { name: "Staff Center", icon: Shield, href: "/dashboard/staff" },
-      ]
-    },
-    {
-      title: "Enforcement",
-      items: [
-        { name: "Moderation", icon: ShieldAlert, href: "/dashboard/moderation" },
-        { name: "Remote Mod", icon: Power, href: "/dashboard/remote-mod" },
-        { name: "Case History", icon: FolderOpen, href: "/dashboard/cases" },
-        { name: "Appeals", icon: AlertTriangle, href: "/dashboard/appeals" },
+        { name: "Automations", icon: Zap, href: "/dashboard/automations" },
       ]
     },
     {

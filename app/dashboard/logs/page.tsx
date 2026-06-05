@@ -53,30 +53,26 @@ export default function LogsPage() {
   };
 
   return (
-    <div className="flex flex-col gap-8 w-full max-w-6xl mx-auto h-full">
-      <div className="flex justify-between items-end">
-        <div>
-          <h1 className="font-outfit text-3xl font-bold tracking-wide text-white mb-2 flex items-center gap-3">
-            <FileText className="w-8 h-8 text-red-500" />
-            Centralized Audit Logs
-          </h1>
-          <p className="font-inter text-sm text-zinc-400">
-            Real-time security events, administrative actions, and system telemetry records.
-          </p>
+    <div className="flex flex-col gap-10 w-full">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="w-2 h-2 bg-red-600" />
+          <h3 className="font-outfit font-semibold text-lg uppercase tracking-widest">Centralized Audit Logs</h3>
         </div>
         <button 
           onClick={() => { setLoading(true); fetchLogs(); }}
-          className="bg-black hover:bg-white/5 border border-white/10 text-white px-4 py-2 rounded text-sm font-inter transition-colors">
+          className="bg-black hover:bg-white/5 border border-white/10 text-white px-4 py-2 rounded text-xs font-inter uppercase tracking-widest transition-colors"
+        >
           Refresh Logs
         </button>
       </div>
 
-      <div className="bg-[#0a0a0a] border border-white/5 rounded overflow-hidden flex flex-col h-full min-h-[600px]">
+      <div className="bg-[#0a0a0a] border border-white/5 flex flex-col flex-1 relative overflow-hidden min-h-[600px]">
         <div className="flex-1 overflow-auto">
           {loading ? (
             <div className="w-full h-full flex flex-col items-center justify-center text-zinc-500 gap-3">
               <Loader2 className="w-6 h-6 animate-spin" />
-              <span className="text-sm font-inter">Retrieving system records...</span>
+              <span className="text-sm font-inter uppercase tracking-widest">Retrieving system records...</span>
             </div>
           ) : logs.length === 0 ? (
             <div className="w-full h-full flex flex-col items-center justify-center text-zinc-500 gap-3 p-10 text-center">
@@ -85,7 +81,7 @@ export default function LogsPage() {
             </div>
           ) : (
             <div className="w-full">
-              <div className="grid grid-cols-12 gap-4 px-6 py-3 border-b border-white/5 text-xs font-bold uppercase tracking-wider text-zinc-500 bg-white/[0.01] sticky top-0 z-10 backdrop-blur-md">
+              <div className="grid grid-cols-12 gap-4 px-8 py-4 border-b border-white/5 text-xs font-bold uppercase tracking-widest text-zinc-500 bg-[#050505] sticky top-0 z-10">
                 <div className="col-span-2">Timestamp</div>
                 <div className="col-span-2">Event Type</div>
                 <div className="col-span-3">Target Entity</div>
@@ -93,7 +89,7 @@ export default function LogsPage() {
               </div>
               <div className="flex flex-col">
                 {logs.map((log) => (
-                  <div key={log.id} className="grid grid-cols-12 gap-4 px-6 py-4 border-b border-white/5 text-sm hover:bg-white/[0.02] transition-colors items-start">
+                  <div key={log.id} className="grid grid-cols-12 gap-4 px-8 py-5 border-b border-white/5 text-sm hover:bg-white/[0.02] transition-colors items-start">
                     <div className="col-span-2 flex items-center gap-2 font-mono text-zinc-500 text-xs">
                       <Clock className="w-3.5 h-3.5" />
                       {new Date(log.created_at).toLocaleString('en-GB', { 
@@ -102,7 +98,7 @@ export default function LogsPage() {
                     </div>
                     
                     <div className="col-span-2">
-                      <span className={`px-2 py-1 rounded text-[10px] font-mono border uppercase tracking-widest flex items-center gap-1.5 w-fit ${getEventColor(log.event_type)}`}>
+                      <span className={`px-2 py-1 text-[10px] font-mono border uppercase tracking-widest flex items-center gap-1.5 w-fit ${getEventColor(log.event_type)}`}>
                         {getEventIcon(log.event_type)}
                         {log.event_type}
                       </span>
@@ -111,11 +107,11 @@ export default function LogsPage() {
                     <div className="col-span-3 flex flex-col gap-0.5">
                       {log.username ? (
                         <>
-                          <span className="font-inter text-white font-medium">{log.username}</span>
+                          <span className="font-inter text-white font-medium tracking-wide">{log.username}</span>
                           <span className="font-mono text-zinc-600 text-[10px]">{log.user_id}</span>
                         </>
                       ) : (
-                        <span className="font-inter text-zinc-600 italic text-xs">System / Anonymous</span>
+                        <span className="font-inter text-zinc-600 italic text-xs tracking-wide">System / Anonymous</span>
                       )}
                     </div>
 
