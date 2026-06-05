@@ -54,6 +54,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       items: [
         { name: "Overview", icon: LayoutDashboard, href: "/dashboard" },
         { name: "Terminal", icon: TerminalSquare, href: "/dashboard/terminal" },
+        { name: "Embed Studio", icon: FolderOpen, href: "/dashboard/embed-builder" },
       ]
     },
     {

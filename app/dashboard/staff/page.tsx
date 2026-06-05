@@ -104,8 +104,7 @@ export default function StaffPage() {
             <button
               type="submit"
               disabled={submitting}
-              className="mt-4 bg-red-600 hover:bg-red-500 disabled:opacity-50 rounded text-white font-outfit font-semibold uppercase tracking-widest text-xs px-8 py-4 transition-colors cursor-pointer flex items-center justify-center gap-2"
-            >
+              className="mt-4 bg-red-600 hover:bg-red-500 disabled:opacity-50 rounded text-white font-outfit font-semibold uppercase tracking-widest text-xs px-8 py-4 transition-colors cursor-pointer flex items-center justify-center gap-2">
               {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
               {submitting ? "Authorizing..." : "Authorize Identity"}
             </button>
@@ -148,8 +147,7 @@ export default function StaffPage() {
                       <button 
                         onClick={() => handleRevoke(s.discord_id)}
                         className="text-zinc-600 hover:text-red-500 hover:bg-red-500/10 p-2 rounded transition-all opacity-0 group-hover:opacity-100"
-                        title="Revoke Access"
-                      >
+                        title="Revoke Access">
                         <Trash2 className="w-4 h-4" />
                       </button>
                     </div>

@@ -61,8 +61,7 @@ export default function LogsPage() {
         </div>
         <button 
           onClick={() => { setLoading(true); fetchLogs(); }}
-          className="bg-black hover:bg-white/5 border border-white/10 text-white px-4 py-2 rounded text-xs font-inter uppercase tracking-widest transition-colors"
-        >
+          className="bg-black hover:bg-white/5 border border-white/10 text-white px-4 py-2 rounded text-xs font-inter uppercase tracking-widest transition-colors">
           Refresh Logs
         </button>
       </div>

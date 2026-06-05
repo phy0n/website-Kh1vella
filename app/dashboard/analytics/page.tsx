@@ -18,7 +18,6 @@ export default function AnalyticsPage() {
   }, []);
 
   const fetchStats = async () => {
-    // We run these queries in parallel
     const [memoryReq, staffReq, replyReq, auditReq] = await Promise.all([
       supabase.from("khivella_memory").select("user_id", { count: 'exact', head: true }),
       supabase.from("khivella_access").select("discord_id", { count: 'exact', head: true }),
@@ -43,7 +42,6 @@ export default function AnalyticsPage() {
 
       <div className="flex flex-col gap-8 flex-1">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {/* Metric Card 1 */}
           <div className="bg-[#0a0a0a] border border-white/5 p-8 flex flex-col gap-4 relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/5 blur-3xl -mr-10 -mt-10 transition-transform group-hover:scale-150 duration-500"></div>
             <div className="flex justify-between items-center relative z-10">
@@ -56,7 +54,6 @@ export default function AnalyticsPage() {
             </div>
           </div>
 
-          {/* Metric Card 2 */}
           <div className="bg-[#0a0a0a] border border-white/5 p-8 flex flex-col gap-4 relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 blur-3xl -mr-10 -mt-10 transition-transform group-hover:scale-150 duration-500"></div>
             <div className="flex justify-between items-center relative z-10">
@@ -69,7 +66,6 @@ export default function AnalyticsPage() {
             </div>
           </div>
 
-          {/* Metric Card 3 */}
           <div className="bg-[#0a0a0a] border border-white/5 p-8 flex flex-col gap-4 relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-32 h-32 bg-green-500/5 blur-3xl -mr-10 -mt-10 transition-transform group-hover:scale-150 duration-500"></div>
             <div className="flex justify-between items-center relative z-10">
@@ -82,7 +78,6 @@ export default function AnalyticsPage() {
             </div>
           </div>
 
-          {/* Metric Card 4 */}
           <div className="bg-[#0a0a0a] border border-white/5 p-8 flex flex-col gap-4 relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/5 blur-3xl -mr-10 -mt-10 transition-transform group-hover:scale-150 duration-500"></div>
             <div className="flex justify-between items-center relative z-10">

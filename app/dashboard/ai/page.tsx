@@ -129,8 +129,7 @@ export default function AIPage() {
                     <button 
                       onClick={() => handleDelete(m.user_id)}
                       className="text-zinc-600 hover:text-red-500 hover:bg-red-500/10 p-2 rounded transition-all opacity-0 group-hover:opacity-100"
-                      title="Wipe Memory"
-                    >
+                      title="Wipe Memory">
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>

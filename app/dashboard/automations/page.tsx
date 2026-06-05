@@ -61,16 +61,14 @@ export default function AutomationsPage() {
       <div className="flex border-b border-white/5">
         <button 
           onClick={() => setActiveTab("autoreplies")}
-          className={`px-8 py-4 font-outfit uppercase tracking-widest text-xs font-semibold transition-colors border-b-2 ${activeTab === "autoreplies" ? "border-red-500 text-white" : "border-transparent text-zinc-500 hover:text-white"}`}
-        >
+          className={`px-8 py-4 font-outfit uppercase tracking-widest text-xs font-semibold transition-colors border-b-2 ${activeTab === "autoreplies" ? "border-red-500 text-white" : "border-transparent text-zinc-500 hover:text-white"}`}>
           <div className="flex items-center gap-2">
             <MessageSquare className="w-4 h-4" /> Auto-Replies
           </div>
         </button>
         <button 
           onClick={() => setActiveTab("sticky")}
-          className={`px-8 py-4 font-outfit uppercase tracking-widest text-xs font-semibold transition-colors border-b-2 ${activeTab === "sticky" ? "border-red-500 text-white" : "border-transparent text-zinc-500 hover:text-white"}`}
-        >
+          className={`px-8 py-4 font-outfit uppercase tracking-widest text-xs font-semibold transition-colors border-b-2 ${activeTab === "sticky" ? "border-red-500 text-white" : "border-transparent text-zinc-500 hover:text-white"}`}>
           <div className="flex items-center gap-2">
             <Pin className="w-4 h-4" /> Sticky Messages
           </div>
@@ -121,8 +119,7 @@ export default function AutomationsPage() {
                         <button 
                           onClick={() => handleDeleteReply(r.id)}
                           className="text-zinc-600 hover:text-red-500 hover:bg-red-500/10 p-2 rounded transition-all opacity-0 group-hover:opacity-100"
-                          title="Delete Trigger"
-                        >
+                          title="Delete Trigger">
                           <Trash2 className="w-4 h-4" />
                         </button>
                       </div>
@@ -176,8 +173,7 @@ export default function AutomationsPage() {
                         <button 
                           onClick={() => handleDeleteSticky(s.channel_id)}
                           className="text-zinc-600 hover:text-red-500 hover:bg-red-500/10 p-2 rounded transition-all opacity-0 group-hover:opacity-100"
-                          title="Remove Sticky Message"
-                        >
+                          title="Remove Sticky Message">
                           <Trash2 className="w-4 h-4" />
                         </button>
                       </div>
