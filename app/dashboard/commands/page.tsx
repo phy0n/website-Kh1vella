@@ -15,6 +15,10 @@ export default function CommandsPage() {
         { name: "/serverinfo", desc: "View detailed network node stats.", admin: false },
         { name: "/userinfo", desc: "Scan a specific entity profile.", admin: false },
         { name: "/avatar", desc: "Extract entity profile imagery.", admin: false },
+        { name: "/grab", desc: "Grab stickers or emojis from messages.", admin: false },
+        { name: "/report", desc: "Report a user to the moderators.", admin: false },
+        { name: "/stats", desc: "Displays bot statistics.", admin: false },
+        { name: "/about", desc: "A brief introduction about the bot.", admin: false },
       ]
     },
     {
@@ -49,6 +53,9 @@ export default function CommandsPage() {
       commands: [
         { name: "/chatbot", desc: "Toggle Google Gemini subsystem on/off.", admin: true },
         { name: "/status", desc: "Modify bot's rich presence (Playing, Watching, etc).", admin: true },
+        { name: "/autoreply", desc: "Manage custom server auto-replies.", admin: true },
+        { name: "/booster", desc: "Configure the server booster system.", admin: true },
+        { name: "/sticky", desc: "Manage sticky messages in a channel.", admin: true },
       ]
     }
   ];
